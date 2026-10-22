@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Product - SportShop Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="admin-brand">
+            🏆 SportShop
+            <span>Admin Panel</span>
+        </div>
+
+        <nav>
+
+            <a href="/admin/dashboard">
+                📊 Dashboard
+            </a>
+
+            <a href="/admin/products" class="active">
+                📦 Products
+            </a>
+
+            <a href="#">
+                👥 Customers
+            </a>
+
+            <a href="#">
+                🛒 Orders
+            </a>
+
+            <a href="/">
+                🏠 View Store
+            </a>
+
+            <a href="/admin/logout">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <h1>
+                    Edit Product
+                </h1>
+
+                <p>
+                    Update product information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- EDIT FORM -->
+
+        <div class="product-form-container">
+
+            <form
+                method="POST"
+                enctype="multipart/form-data">
+
+
+                <!-- PRODUCT NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        value="{{ product['name'] }}"
+                        required>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Category
+                    </label>
+
+                    <select
+                        name="category"
+                        required>
+
+                        <option value="Cricket"
+                            {% if product['category'] == 'Cricket' %}
+                            selected
+                            {% endif %}>
+                            Cricket
+                        </option>
+
+                        <option value="Football"
+                            {% if product['category'] == 'Football' %}
+                            selected
+                            {% endif %}>
+                            Football
+                        </option>
+
+                        <option value="Badminton"
+                            {% if product['category'] == 'Badminton' %}
+                            selected
+                            {% endif %}>
+                            Badminton
+                        </option>
+
+                        <option value="Basketball"
+                            {% if product['category'] == 'Basketball' %}
+                            selected
+                            {% endif %}>
+                            Basketball
+                        </option>
+
+                        <option value="Running"
+                            {% if product['category'] == 'Running' %}
+                            selected
+                            {% endif %}>
+                            Running
+                        </option>
+
+                        <option value="Fitness"
+                            {% if product['category'] == 'Fitness' %}
+                            selected
+                            {% endif %}>
+                            Fitness
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PRICE + STOCK -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Price (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            name="price"
+                            step="0.01"
+                            min="0"
+                            value="{{ product['price'] }}"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Stock Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            name="quantity"
+                            min="0"
+                            value="{{ product['quantity'] }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                        placeholder="Enter product description">{{ product['description'] or '' }}</textarea>
+
+                </div>
+
+
+                <!-- CURRENT IMAGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Current Product Image
+                    </label>
+
+                    {% if product['image'] %}
+
+                        <div>
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='uploads/' + product['image']
+                                ) }}"
+                                alt="Current Product"
+                                class="edit-product-image">
+
+                        </div>
+
+                    {% else %}
+
+                        <p class="no-current-image">
+                            No image uploaded.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- NEW IMAGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Change Product Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="image"
+                        accept=".jpg,.jpeg,.png,.webp">
+
+                    <small>
+                        Leave empty if you want to keep the current image.
+                    </small>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="/admin/products"
+                        class="cancel-btn">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn">
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

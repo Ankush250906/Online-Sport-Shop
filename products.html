@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products - SportShop</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🏆 SportShop
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="/">Home</a>
+        </li>
+
+        <li>
+            <a href="/products">Products</a>
+        </li>
+
+          <li>
+            <a href="{{ url_for('about') }}">About</a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('contact') }}">Contact</a>
+        </li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- PAGE HEADER -->
+
+<section class="products-header">
+
+    <h1>
+        Sports Products
+    </h1>
+
+    <p>
+        Find the right equipment for your game.
+    </p>
+
+</section>
+
+
+<!-- SEARCH + FILTER -->
+
+<section class="product-controls">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search products...">
+
+
+    <select id="categoryFilter">
+
+        <option value="all">
+            All Categories
+        </option>
+
+        <option value="Cricket">
+            Cricket
+        </option>
+
+        <option value="Football">
+            Football
+        </option>
+
+        <option value="Badminton">
+            Badminton
+        </option>
+
+        <option value="Basketball">
+            Basketball
+        </option>
+
+        <option value="Running">
+            Running
+        </option>
+
+        <option value="Fitness">
+            Fitness
+        </option>
+
+    </select>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section class="products-section">
+
+    <div class="products-grid" id="productsGrid">
+
+        {% if products %}
+
+            {% for product in products %}
+
+            <div
+                class="product-card"
+                data-name="{{ product['name']|lower }}"
+                data-category="{{ product['category']|lower }}">
+
+                <!-- IMAGE -->
+
+                <div class="product-image-container">
+
+                    {% if product['image'] %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/' + product['image']
+                            ) }}"
+                            alt="{{ product['name'] }}">
+
+                    {% else %}
+
+                        <div class="product-placeholder">
+                            🏆
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="product-info">
+
+                    <span class="product-category">
+                        {{ product['category'] }}
+                    </span>
+
+                    <h3>
+                        {{ product['name'] }}
+                    </h3>
+
+                    <p class="product-description">
+
+                        {{ product['description'] or
+                           'Quality sports product from SportShop.' }}
+
+                    </p>
+
+
+                    <div class="product-bottom">
+
+                        <span class="product-price">
+                            ₹{{ "%.2f"|format(product['price']) }}
+                        </span>
+
+
+                        {% if product['quantity'] > 0 %}
+
+                            <span class="product-stock">
+                                In Stock
+                            </span>
+
+                        {% else %}
+
+                            <span class="product-out">
+                                Out of Stock
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <button
+                        class="cart-btn"
+                        {% if product['quantity'] <= 0 %}
+                        disabled
+                        {% endif %}
+                        onclick="addToCart(
+                            {{ product['id'] }},
+                            '{{ product['name']|replace("'", "\\'") }}',
+                            {{ product['price'] }}
+                        )">
+
+                        🛒 Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-products">
+
+                <h2>
+                    No Products Available
+                </h2>
+
+                <p>
+                    Products will appear here once the admin adds them.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 SportShop. All Rights Reserved.
+    </p>
+
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const productCards = document.querySelectorAll(".product-card");
+
+    function filterProducts() {
+
+        const searchText =
+            searchInput.value.toLowerCase().trim();
+
+        const selectedCategory =
+            categoryFilter.value.toLowerCase().trim();
+
+        productCards.forEach(function (card) {
+
+            const productName =
+                card.getAttribute("data-name")
+                .toLowerCase()
+                .trim();
+
+            const productCategory =
+                card.getAttribute("data-category")
+                .toLowerCase()
+                .trim();
+
+            const categoryMatch =
+                selectedCategory === "all" ||
+                productCategory === selectedCategory;
+
+            const searchMatch =
+                productName.includes(searchText);
+
+            if (categoryMatch && searchMatch) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+
+        });
+    }
+
+    categoryFilter.addEventListener(
+        "change",
+        filterProducts
+    );
+
+    searchInput.addEventListener(
+        "input",
+        filterProducts
+    );
+
+});
+</script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}">
+    
+</script>
+
+</body>
+
+</html>

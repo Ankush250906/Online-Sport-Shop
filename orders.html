@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders - SportShop</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        SportShop
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('cart') }}">Cart 🛒</a>
+        <a href="{{ url_for('orders') }}">My Orders</a>
+
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+    </div>
+
+</nav>
+
+
+<section class="orders-section">
+
+    <div class="orders-container">
+
+        <h1>My Orders</h1>
+
+        <p class="orders-subtitle">
+            View your previous SportShop orders
+        </p>
+
+        {% if orders %}
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-header">
+
+                    <div>
+                        <h2>
+                            Order #{{ order['id'] }}
+                        </h2>
+
+                        <p>
+                            {{ order['order_date'] }}
+                        </p>
+                    </div>
+
+                    <span class="order-status">
+                        {{ order['status'] }}
+                    </span>
+
+                </div>
+
+
+                <div class="order-products">
+
+                    {% for item in order_items[order['id']] %}
+
+                    <div class="order-product">
+
+                        <div>
+                            <strong>
+                                {{ item['name'] }}
+                            </strong>
+
+                            <p>
+                                Quantity:
+                                {{ item['quantity'] }}
+                            </p>
+                        </div>
+
+                        <div>
+                            ₹{{ "%.2f"|format(item['price'] * item['quantity']) }}
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="order-footer">
+
+                    <strong>
+                        Total Amount:
+                    </strong>
+
+                    <strong>
+                        ₹{{ "%.2f"|format(order['total_amount']) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-orders">
+
+                <h2>No Orders Yet 📦</h2>
+
+                <p>
+                    You haven't placed any orders yet.
+                </p>
+
+                <a href="{{ url_for('products') }}">
+                    Start Shopping
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 SportShop. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

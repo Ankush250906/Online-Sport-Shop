@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Order #{{ order["id"] }} - SportShop Admin
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="admin-brand">
+            🏆 SportShop
+            <span>Admin Panel</span>
+        </div>
+
+        <nav>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                📊 Dashboard
+            </a>
+
+            <a href="{{ url_for('admin_products') }}">
+                📦 Products
+            </a>
+
+            <a href="/admin/customers">
+                👥 Customers
+            </a>
+
+            <a href="{{ url_for('admin_orders') }}"
+               class="active">
+                🛒 Orders
+            </a>
+
+            <a href="/">
+                🏠 View Store
+            </a>
+
+            <a href="{{ url_for('admin_logout') }}">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <h1>
+                    Order #{{ order["id"] }}
+                </h1>
+
+                <p>
+                    Order Details
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- CUSTOMER DETAILS -->
+
+        <section class="welcome-card">
+
+            <h2>Customer Information</h2>
+
+            <p>
+                <strong>Name:</strong>
+                {{ order["customer_name"] }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ order["email"] }}
+            </p>
+
+            <p>
+                <strong>Order Date:</strong>
+                {{ order["order_date"] }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ order["status"] }}
+            </p>
+
+        </section>
+
+
+        <!-- ORDER ITEMS -->
+
+        <section class="welcome-card">
+
+            <h2>Order Items</h2>
+
+            <div style="overflow-x:auto;">
+
+                <table style="
+                    width:100%;
+                    border-collapse:collapse;
+                    margin-top:20px;
+                ">
+
+                    <thead>
+
+                        <tr>
+
+                            <th style="
+                                padding:12px;
+                                text-align:left;
+                                background:#111827;
+                                color:white;
+                            ">
+                                Product
+                            </th>
+
+                            <th style="
+                                padding:12px;
+                                text-align:left;
+                                background:#111827;
+                                color:white;
+                            ">
+                                Quantity
+                            </th>
+
+                            <th style="
+                                padding:12px;
+                                text-align:left;
+                                background:#111827;
+                                color:white;
+                            ">
+                                Price
+                            </th>
+
+                            <th style="
+                                padding:12px;
+                                text-align:left;
+                                background:#111827;
+                                color:white;
+                            ">
+                                Subtotal
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for item in items %}
+
+                        <tr>
+
+                            <td style="padding:12px;">
+                                {{ item["name"] }}
+                            </td>
+
+                            <td style="padding:12px;">
+                                {{ item["quantity"] }}
+                            </td>
+
+                            <td style="padding:12px;">
+                                ₹{{ "%.2f"|format(item["price"]) }}
+                            </td>
+
+                            <td style="padding:12px;">
+                                ₹{{ "%.2f"|format(
+                                    item["price"] * item["quantity"]
+                                ) }}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOTAL -->
+
+        <section class="welcome-card">
+
+            <h2>
+                Total Amount:
+                ₹{{ "%.2f"|format(order["total_amount"]) }}
+            </h2>
+
+        </section>
+
+
+        <br>
+
+        <a href="{{ url_for('admin_orders') }}"
+           style="
+                display:inline-block;
+                padding:12px 20px;
+                background:#111827;
+                color:white;
+                text-decoration:none;
+                border-radius:6px;
+           ">
+
+            ← Back to Orders
+
+        </a>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
