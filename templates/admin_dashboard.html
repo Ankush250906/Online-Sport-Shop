@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - SportShop</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+
+    <style>
+        .stat-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .stat-link .stat-card {
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .stat-link .stat-card:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="admin-brand">
+            🏆 SportShop
+            <span>Admin Panel</span>
+        </div>
+
+        <nav>
+
+            <a href="{{ url_for('admin_dashboard') }}"
+               class="active">
+                📊 Dashboard
+            </a>
+
+            <a href="{{ url_for('admin_products') }}">
+                📦 Products
+            </a>
+
+            <a href="/admin/customers">
+                👥 Customers
+            </a>
+
+            <a href="{{ url_for('admin_stock') }}">
+                📊 Stock
+            </a>
+
+            <a href="{{ url_for('admin_orders') }}">
+                🛒 Orders
+            </a>
+
+            <a href="/">
+                🏠 View Store
+            </a>
+
+            <a href="{{ url_for('admin_logout') }}">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <header class="dashboard-header">
+
+            <div>
+                <h1>Dashboard</h1>
+
+                <p>
+                    Welcome to SportShop Admin Panel
+                </p>
+            </div>
+
+            <div class="admin-user">
+                🛡️ {{ session["admin"] }}
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+
+            <!-- PRODUCTS -->
+
+            <a href="{{ url_for('admin_products') }}"
+               class="stat-link">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Products
+                        </p>
+
+                        <h2>
+                            {{ product_count }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- CUSTOMERS -->
+
+            <a href="/admin/customers"
+               class="stat-link">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Customers
+                        </p>
+
+                        <h2>
+                            {{ user_count }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- ORDERS -->
+
+            <a href="{{ url_for('admin_orders') }}"
+               class="stat-link">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🛒
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Orders
+                        </p>
+
+                        <h2>
+                            {{ order_count }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <!-- SALES -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ₹
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Sales
+                    </p>
+
+                    <h2>
+                        ₹{{ total_sales }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- WELCOME CARD -->
+
+        <section class="welcome-card">
+
+            <h2>
+                Welcome to SportShop Admin 👋
+            </h2>
+
+            <p>
+                Manage products, customers, orders
+                and your complete online sports store
+                from this dashboard.
+            </p>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

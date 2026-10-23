@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Details - SportShop Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <h2>SportShop</h2>
+
+        <ul>
+
+            <li>
+                <a href="{{ url_for('admin_dashboard') }}">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_products') }}">
+                    Products
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_customers') }}"
+                   class="active">
+                    Customers
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_orders') }}">
+                    Orders
+                </a>
+            </li>
+
+            <li>
+                <a href="/">
+                    View Store
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_logout') }}">
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <div class="orders-page">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="order-details-header">
+
+                <div>
+
+                    <h1>
+                        Customer Details
+                    </h1>
+
+                    <p>
+                        Customer #{{ customer["id"] }}
+                    </p>
+
+                </div>
+
+
+                <a href="{{ url_for('admin_customers') }}"
+                   class="view-details-btn">
+
+                    ← Back to Customers
+
+                </a>
+
+            </div>
+
+
+            <!-- CUSTOMER INFORMATION -->
+
+            <div class="orders-card">
+
+                <h2>
+                    Customer Information
+                </h2>
+
+
+                <div class="customer-details">
+
+                    <p>
+
+                        <strong>
+                            Name:
+                        </strong>
+
+                        {{ customer["name"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Email:
+                        </strong>
+
+                        {{ customer["email"] }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER HISTORY -->
+
+            <div class="orders-card">
+
+                <h2>
+                    Order History
+                </h2>
+
+
+                {% if orders %}
+
+                <table class="orders-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Total
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                View
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for order in orders %}
+
+                        <tr>
+
+                            <td>
+                                #{{ order["id"] }}
+                            </td>
+
+
+                            <td class="total-price">
+
+                                ₹{{ "%.2f"|format(
+                                    order["total_amount"] or 0
+                                ) }}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if order["status"] == "Pending" %}
+
+                                    <span class="status pending">
+                                        Pending
+                                    </span>
+
+                                {% elif order["status"] == "Confirmed" %}
+
+                                    <span class="status confirmed">
+                                        Confirmed
+                                    </span>
+
+                                {% elif order["status"] == "Shipped" %}
+
+                                    <span class="status shipped">
+                                        Shipped
+                                    </span>
+
+                                {% elif order["status"] == "Delivered" %}
+
+                                    <span class="status delivered">
+                                        Delivered
+                                    </span>
+
+                                {% elif order["status"] == "Cancelled" %}
+
+                                    <span class="status cancelled">
+                                        Cancelled
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status">
+                                        {{ order["status"] }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+                                {{ order["order_date"] }}
+                            </td>
+
+
+                            <td>
+
+                                <a href="{{ url_for(
+                                    'admin_order_details',
+                                    order_id=order['id']
+                                ) }}"
+                                   class="view-details-btn">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+                {% else %}
+
+                <div class="no-orders">
+
+                    <h3>
+                        No Orders Found
+                    </h3>
+
+                    <p>
+                        This customer has not placed any orders yet.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

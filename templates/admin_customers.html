@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customers - SportShop</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+
+    <style>
+        /* ==============================
+           DELETE BUTTON
+        ============================== */
+
+        .delete-btn {
+            display: inline-block;
+            padding: 7px 12px;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+
+        /* ==============================
+           VIEW BUTTON
+        ============================== */
+
+        .view-details-btn {
+            display: inline-block;
+            padding: 7px 12px;
+            text-decoration: none;
+        }
+
+
+        /* ==============================
+           CUSTOMER SEARCH
+        ============================== */
+
+        .customer-search {
+            margin: 20px 0;
+        }
+
+        .customer-search input {
+            width: 350px;
+            max-width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .customer-search input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.10);
+        }
+
+        .customer-search input::placeholder {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <h2>SportShop</h2>
+
+        <ul>
+
+            <li>
+                <a href="{{ url_for('admin_dashboard') }}">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_products') }}">
+                    Products
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_stock') }}">
+                    Stock
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_customers') }}"
+                   class="active">
+                    Customers
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_orders') }}">
+                    Orders
+                </a>
+            </li>
+
+            <li>
+                <a href="/">
+                    View Store
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('admin_logout') }}">
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <div class="orders-page">
+
+            <!-- HEADER -->
+            <div class="order-details-header">
+
+                <div>
+
+                    <h1>Customers</h1>
+
+                    <p>
+                        Manage registered SportShop customers
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if customers %}
+
+            <!-- ==============================
+                 CUSTOMER SEARCH
+            =============================== -->
+
+            <div class="customer-search">
+
+                <input
+                    type="text"
+                    id="customerSearch"
+                    placeholder="🔍 Search customer by name or email..."
+                    onkeyup="searchCustomers()"
+                >
+
+            </div>
+
+
+            <!-- CUSTOMER TABLE -->
+            <div class="orders-card">
+
+                <table class="orders-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Customer</th>
+
+                            <th>Email</th>
+
+                            <th>Total Orders</th>
+
+                            <th>Total Spent</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for customer in customers %}
+
+                        <tr>
+
+                            <!-- ID -->
+                            <td>
+                                #{{ customer["id"] }}
+                            </td>
+
+
+                            <!-- CUSTOMER -->
+                            <td>
+
+                                <strong>
+                                    {{ customer["name"] }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- EMAIL -->
+                            <td>
+
+                                {{ customer["email"] }}
+
+                            </td>
+
+
+                            <!-- TOTAL ORDERS -->
+                            <td>
+
+                                {{ customer["total_orders"] }}
+
+                            </td>
+
+
+                            <!-- TOTAL SPENT -->
+                            <td class="total-price">
+
+                                ₹{{ "%.2f"|format(
+                                    customer["total_spent"]
+                                ) }}
+
+                            </td>
+
+
+                            <!-- ACTIONS -->
+                            <td>
+
+                                <!-- VIEW DETAILS -->
+                                <a href="{{ url_for(
+                                    'admin_customer_details',
+                                    user_id=customer['id']
+                                ) }}"
+                                   class="view-details-btn">
+
+                                    👁️ View
+
+                                </a>
+
+
+                                <!-- DELETE CUSTOMER -->
+                                <a href="{{ url_for(
+                                    'delete_customer',
+                                    user_id=customer['id']
+                                ) }}"
+                                   class="delete-btn"
+                                   onclick="return confirm(
+                                       'Are you sure you want to delete this customer?'
+                                   );">
+
+                                    🗑️ Delete
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <!-- NO CUSTOMERS -->
+            <div class="orders-card no-orders">
+
+                <h2>
+                    No Customers Found
+                </h2>
+
+                <p>
+                    Registered customers will appear here.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ==============================
+     CUSTOMER SEARCH SCRIPT
+============================== -->
+
+<script>
+
+function searchCustomers() {
+
+    const searchInput =
+        document.getElementById("customerSearch");
+
+    const search =
+        searchInput.value
+        .toLowerCase()
+        .trim();
+
+    const rows =
+        document.querySelectorAll(
+            ".orders-table tbody tr"
+        );
+
+
+    rows.forEach(function(row) {
+
+        const customerName =
+            row.cells[1]
+            .innerText
+            .toLowerCase();
+
+        const customerEmail =
+            row.cells[2]
+            .innerText
+            .toLowerCase();
+
+
+        if (
+            customerName.includes(search) ||
+            customerEmail.includes(search)
+        ) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Product - SportShop Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="admin-brand">
+            🏆 SportShop
+            <span>Admin Panel</span>
+        </div>
+
+        <nav>
+
+            <a href="/admin/dashboard">
+                📊 Dashboard
+            </a>
+
+            <a href="/admin/products" class="active">
+                📦 Products
+            </a>
+
+            <a href="#">
+                👥 Customers
+            </a>
+
+            <a href="#">
+                🛒 Orders
+            </a>
+
+            <a href="/">
+                🏠 View Store
+            </a>
+
+            <a href="/admin/logout">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <h1>
+                    Add Product
+                </h1>
+
+                <p>
+                    Add a new sports product
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="product-form-container">
+
+            <form
+                method="POST"
+                enctype="multipart/form-data">
+
+
+                <!-- PRODUCT NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter product name"
+                        required>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Category
+                    </label>
+
+                    <select
+                        name="category"
+                        required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Cricket">
+                            Cricket
+                        </option>
+
+                        <option value="Football">
+                            Football
+                        </option>
+
+                        <option value="Badminton">
+                            Badminton
+                        </option>
+
+                        <option value="Basketball">
+                            Basketball
+                        </option>
+
+                        <option value="Running">
+                            Running
+                        </option>
+
+                        <option value="Fitness">
+                            Fitness
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Price (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            name="price"
+                            step="0.01"
+                            min="0"
+                            placeholder="Enter price"
+                            required>
+
+                    </div>
+
+
+                    <!-- STOCK -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Stock Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            name="quantity"
+                            min="0"
+                            placeholder="Enter quantity"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                        placeholder="Enter product description"></textarea>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Product Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="image"
+                        accept=".jpg,.jpeg,.png,.webp">
+
+                    <small>
+                        JPG, PNG or WEBP — Maximum recommended size 5 MB
+                    </small>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="/admin/products"
+                        class="cancel-btn">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn">
+
+                        + Add Product
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

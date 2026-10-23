@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login - SportShop</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .admin-login-option {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .admin-login-option p {
+            margin-bottom: 10px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .admin-login-btn {
+            display: inline-block;
+            padding: 9px 18px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .admin-login-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        SportShop
+    </div>
+
+</nav>
+
+
+<section class="auth-section">
+
+    <div class="auth-card">
+
+        <div class="auth-icon">
+            👤
+        </div>
+
+        <h1>Welcome Back</h1>
+
+        <p class="auth-subtitle">
+            Login to your SportShop account
+        </p>
+
+
+        <!-- CUSTOMER LOGIN FORM -->
+
+        <form method="POST"
+              action="{{ url_for('login') }}">
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required>
+
+            </div>
+
+
+            <button type="submit"
+                    class="auth-btn">
+                Login
+            </button>
+
+        </form>
+
+
+        <!-- REGISTER -->
+
+        <p class="auth-footer">
+
+            Don't have an account?
+
+            <a href="{{ url_for('register') }}">
+                Create Account
+            </a>
+
+        </p>
+
+
+        <!-- ADMIN LOGIN -->
+
+        <div class="admin-login-option">
+
+            <p>
+                Are you an administrator?
+            </p>
+
+            <a href="{{ url_for('admin_login') }}"
+               class="admin-login-btn">
+
+                🔐 Admin Login
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 SportShop. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

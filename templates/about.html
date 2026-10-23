@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About Us - SportShop</title>
+
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #111827;
+        }
+
+        /* NAVBAR */
+        .shop-navbar {
+            width: 100%;
+            background: #111827;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 45px;
+        }
+
+        .shop-logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .shop-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .shop-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .shop-links a:hover {
+            color: #60a5fa;
+        }
+
+        /* PAGE */
+        .about-page {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, #111827, #2563eb);
+            color: white;
+            text-align: center;
+            padding: 45px 20px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+        }
+
+        .about-hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .about-hero p {
+            font-size: 15px;
+        }
+
+        .about-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .about-card h2 {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .about-card > p {
+            color: #6b7280;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .feature {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 9px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .feature p {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background: #111827;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+
+            .shop-navbar {
+                padding: 14px 15px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .shop-links {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .about-hero h1 {
+                font-size: 28px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="shop-navbar">
+
+    <div class="shop-logo">
+        🏆 SportShop
+    </div>
+
+    <ul class="shop-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    </ul>
+
+</nav>
+
+
+<main class="about-page">
+
+    <section class="about-hero">
+        <h1>About SportShop</h1>
+        <p>Your trusted destination for sports equipment and accessories.</p>
+    </section>
+
+
+    <section class="about-card">
+
+        <h2>Who We Are</h2>
+
+        <p>
+            SportShop is an online sports shopping platform designed
+            to provide quality sports products in one convenient place.
+            Our goal is to make sports equipment easily accessible
+            for players, students, fitness enthusiasts and sports lovers.
+        </p>
+
+    </section>
+
+
+    <section class="about-card">
+
+        <h2>Why Choose SportShop?</h2>
+
+        <div class="features">
+
+            <div class="feature">
+                <div class="feature-icon">🏏</div>
+                <h3>Quality Products</h3>
+                <p>
+                    Quality sports equipment and accessories
+                    for different sports.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🛒</div>
+                <h3>Easy Shopping</h3>
+                <p>
+                    Browse products, add them to cart
+                    and place your order easily.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">💳</div>
+                <h3>Easy Payment</h3>
+                <p>
+                    Convenient payment options for
+                    a smooth shopping experience.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="about-card">
+
+        <h2>Our Mission</h2>
+
+        <p>
+            Our mission is to create a simple, reliable and
+            user-friendly online platform where sports lovers
+            can easily find the products they need.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+    © 2026 SportShop. All Rights Reserved.
+</footer>
+
+</body>
+</html>
