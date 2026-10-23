@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SportShop - Online Sports Store</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🏆 SportShop
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="/">Home</a>
+        </li>
+
+        <li>
+            <a href="/products">Products</a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('about') }}">About</a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('contact') }}">Contact</a>
+        </li>
+
+
+    </ul>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Everything for Your Game
+        </h1>
+
+        <p>
+            Discover quality sports equipment,
+            accessories and fitness products
+            at SportShop.
+        </p>
+
+        <a href="/products" class="btn">
+            Shop Now →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="categories">
+
+    <h2>
+        Shop By Category
+    </h2>
+
+    <div class="category-container">
+
+        <div class="category-card">
+            🏏<br>
+            Cricket
+        </div>
+
+        <div class="category-card">
+            ⚽<br>
+            Football
+        </div>
+
+        <div class="category-card">
+            🏸<br>
+            Badminton
+        </div>
+
+        <div class="category-card">
+            🏀<br>
+            Basketball
+        </div>
+
+        <div class="category-card">
+            🏃<br>
+            Running
+        </div>
+
+        <div class="category-card">
+            💪<br>
+            Fitness
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026 SportShop. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+
+</html>

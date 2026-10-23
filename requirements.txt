@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 Flask
 gunicorn
 razorpay
+=======
+Flask
+gunicorn
+razorpay
+python-dotenv
+>>>>>>> f329322b65c2c5b1f12a0ce626ab6edff97fb707
