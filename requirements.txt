@@ -1,7 +1,5 @@
 Flask
 gunicorn
 razorpay
-Flask
-gunicorn
-razorpay
 python-dotenv
+psycopg[binary]
