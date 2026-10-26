@@ -9,3 +9,7 @@ SportZone is a responsive online sports shopping website featuring Cricket, Foot
 4. Add `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` if you want to enable Razorpay payments, then deploy the service.
 
 The app initializes its tables at startup and will fail to start if it cannot connect to the database. Render's local filesystem is ephemeral, so uploaded product images need persistent or object storage if they must survive redeploys.
+
+## Run locally in VS Code
+
+Open this folder in VS Code and allow automatic tasks when prompted. The `Start SportShop locally` task starts the Flask server on `http://127.0.0.1:5000` whenever the workspace is opened. Locally, the app uses `sportshop.db`; Render continues to use PostgreSQL through `DATABASE_URL`.

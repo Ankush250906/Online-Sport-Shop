@@ -4,6 +4,10 @@ from werkzeug.utils import secure_filename
 
 import psycopg
 
+import sqlite3
+
+import re
+
 import os
 
 import razorpay
@@ -39,6 +43,7 @@ razorpay_client = razorpay.Client(
 )
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+LOCAL_DATABASE_PATH = "sportshop.db"
 
 UPLOAD_FOLDER = "static/uploads"
 
@@ -77,14 +82,50 @@ def hybrid_row_factory(cursor):
     return make_row
 
 
+class SQLiteCursor:
+    def __init__(self, cursor):
+        self._cursor = cursor
+
+    def execute(self, query, params=()):
+        query = re.sub(
+            r"\bBIGSERIAL\s+PRIMARY\s+KEY\b",
+            "INTEGER PRIMARY KEY AUTOINCREMENT",
+            query,
+            flags=re.IGNORECASE,
+        ).replace("%s", "?")
+        self._cursor.execute(query, params)
+        return self
+
+    def __getattr__(self, name):
+        return getattr(self._cursor, name)
+
+
+class SQLiteConnection:
+    def __init__(self, connection):
+        self._connection = connection
+
+    def cursor(self):
+        return SQLiteCursor(self._connection.cursor())
+
+    def execute(self, query, params=()):
+        return SQLiteCursor(self._connection.cursor()).execute(query, params)
+
+    def __getattr__(self, name):
+        return getattr(self._connection, name)
+
+
 def get_db():
-    """Connect to PostgreSQL using the DATABASE_URL environment variable."""
-    if not DATABASE_URL:
+    """Use PostgreSQL in production and the project SQLite database locally."""
+    if DATABASE_URL:
+        return psycopg.connect(DATABASE_URL, row_factory=hybrid_row_factory)
+    if os.getenv("RENDER") == "true" or os.getenv("RENDER_SERVICE_ID"):
         raise RuntimeError(
             "DATABASE_URL is missing. Add your PostgreSQL connection URL "
             "to the Render web service environment variables."
         )
-    return psycopg.connect(DATABASE_URL, row_factory=hybrid_row_factory)
+    connection = sqlite3.connect(LOCAL_DATABASE_PATH)
+    connection.row_factory = sqlite3.Row
+    return SQLiteConnection(connection)
 
 # ==========================================
 
@@ -1048,7 +1089,7 @@ def register():
 
             )
 
-        except psycopg.errors.UniqueViolation:
+        except (psycopg.errors.UniqueViolation, sqlite3.IntegrityError):
 
             conn.close()
 
