@@ -78,9 +78,12 @@ def hybrid_row_factory(cursor):
 
 
 def get_db():
-    """Connect to Neon PostgreSQL using the DATABASE_URL environment variable."""
+    """Connect to PostgreSQL using the DATABASE_URL environment variable."""
     if not DATABASE_URL:
-        raise RuntimeError("DATABASE_URL is missing. Add your Neon connection string in Vercel Environment Variables.")
+        raise RuntimeError(
+            "DATABASE_URL is missing. Add your PostgreSQL connection URL "
+            "to the Render web service environment variables."
+        )
     return psycopg.connect(DATABASE_URL, row_factory=hybrid_row_factory)
 
 # ==========================================
@@ -2257,12 +2260,9 @@ def admin_logout():
 
 # ==========================================
 
-# Initialize tables when the app starts (including on Vercel/Gunicorn).
+# Initialize tables when the app starts (including on Render/Gunicorn).
 # The uploads directory is only writable locally; use persistent object storage for production uploads.
-try:
-    init_db()
-except Exception as exc:
-    app.logger.exception("Database initialization failed: %s", exc)
+init_db()
 
 if __name__ == "__main__":
 
